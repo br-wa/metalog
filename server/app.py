@@ -43,6 +43,7 @@ def verify_token(token):
 class Login(Resource):
     @cors.crossdomain(origin='*')
     def get(self):
+        args = login_parser.parse_args()
         epoch_time = int(time())
         return {'server_time': epoch_time}
     def post(self):
