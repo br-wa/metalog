@@ -35,7 +35,7 @@ const App = () => {
 		const publicAddress = coinbase.toLowerCase();	
 	
 		try {
-			const response = await fetch(`${process.env.REACT_APP_API_URL}/login?q=${publicAddress}`, {method: 'GET'});
+			const response = await fetch(`${process.env.REACT_APP_API_URL}/login?address=${publicAddress}`, {method: 'GET'});
 			const data = await response.json();
 			var server_time = data.server_time;
 			var server_time_as_string = "logging_in_at_time_" + data.server_time.toString();

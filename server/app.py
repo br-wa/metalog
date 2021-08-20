@@ -44,21 +44,26 @@ class Login(Resource):
     @cors.crossdomain(origin='*')
     def get(self):
         args = login_parser.parse_args()
+        address = args['address']
+        # do nothing with the address for now
         epoch_time = int(time())
         return {'server_time': epoch_time}
     def post(self):
         args = login_parser.parse_args()
-        login_time = args['login_time']
-        if int(login_time) + 60 < int(time()):
-            #took over a minute to log in
-            return "Login expired", 401
-        address = args['address']
-        signature = args['signature']
-        message = "logging_in_at_time_" + str(login_time)
-        rec_addr = recover_address(message, signature)
-        if rec_addr == address:
-            return {'token': str(keccak((signature + seed).encode()).hex())}, 200
-        return "Invalid signature", 401
+        try:
+            login_time = args['login_time']
+            if int(login_time) + 60 < int(time()):
+                #took over a minute to log in
+                return "Login expired", 401
+            address = args['address']
+            signature = args['signature']
+            message = "logging_in_at_time_" + str(login_time)
+            rec_addr = recover_address(message, signature)
+            if rec_addr == address:
+                return {'token': str(keccak((signature + seed).encode()).hex())}, 200
+            return "Invalid signature", 401
+        except:
+            return "Invalid request", 400
 
 api.add_resource(Login, "/api/login")
 
