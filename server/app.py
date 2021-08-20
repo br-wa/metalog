@@ -49,7 +49,7 @@ class Login(Resource):
     def post(self):
         args = login_parser.parse_args()
         login_time = args['login_time']
-        if int(login_time) + 60 > int(time()):
+        if int(login_time) + 60 < int(time()):
             #took over a minute to log in
             return "Login expired", 401
         address = args['address']
