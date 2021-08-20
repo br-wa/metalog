@@ -47,8 +47,10 @@ class Login(Resource):
         return {'server_time': epoch_time}
     def post(self):
         args = login_parser.parse_args()
-        print(args)
         login_time = args['login_time']
+        if int(login_time) + 60 > int(time()):
+            #took over a minute to log in
+            return "Login expired", 401
         address = args['address']
         signature = args['signature']
         message = "logging_in_at_time_" + str(login_time)
