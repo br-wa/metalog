@@ -12,7 +12,7 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app, origins="*", allow_headers=["Content-Type", "Access-Control-Allow-Credentials"])
 
-seed = str(keccak(b'SEED'))
+seed = str(keccak(b'SEED')) # CHANGE THIS IN PRODUCTION
 
 signature_key = KeyAPI('eth_keys.backends.NativeECCBackend')
 
